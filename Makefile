@@ -66,3 +66,7 @@ test: ## Run the test suite
 
 permissions: ## Fix file ownership on the host after Docker writes as root
 	sudo chown -R $$USER:$$USER .
+
+clear:
+	docker compose exec app php artisan view:clear
+	docker compose exec app php artisan optimize:clear
