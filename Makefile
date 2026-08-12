@@ -47,11 +47,16 @@ seed-employees: ## Run only the EmployeeSeeder
 install: ## Install Composer dependencies
 	docker-compose exec app composer install
 
-breeze: ## Install Laravel Breeze (auth scaffolding)
+breeze: ## Install Laravel Breeze (auth scaffolding). Requires Node/npm on the host.
 	docker-compose exec app composer require laravel/breeze --dev
 	docker-compose exec app php artisan breeze:install blade
-	docker-compose exec app npm install
-	docker-compose exec app npm run build
+	cd src && npm install && npm run build
+
+npm-build: ## Rebuild frontend assets (run after editing Blade/CSS/JS). Requires Node/npm on the host.
+	cd src && npm run build
+
+npm-dev: ## Run Vite dev server with hot reload for frontend work. Requires Node/npm on the host.
+	cd src && npm run dev
 
 route-list: ## List all registered routes
 	docker-compose exec app php artisan route:list
